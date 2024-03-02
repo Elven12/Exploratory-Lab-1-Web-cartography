@@ -27,6 +27,15 @@ function highlight_style(feature){
     }
 }
 
+function buttonswitch() {
+    var button = document.getElementById('showRoad');
+    if (button.textContent == 'Show Base Roads') {
+        button.textContent = 'Hide Base Roads';
+    } else {
+        button.textContent = 'Show Base Roads';
+    }
+}
+
 function roadsToFilter(feature){
     if (roadsToHighlight == ""){
         return true;
@@ -38,16 +47,32 @@ function roadsToFilter(feature){
     
 }
 
+
 var hightlightLayer = {};
-function baseRoads() {
+var baseRoads = {}
+
+function layerchange(){
+    var buttonText = document.getElementById('showRoad').textContent;
+    if (buttonText == 'Hide Base Roads'){
+        addbaseRoads();
+    }else if (buttonText == 'Show Base Roads'){
+        hideRoads()
+    }
+}
+
+function hideRoads() {
+    map.removeLayer(baseRoads)
+}
+function addbaseRoads() {
 
     if (map.hasLayer(hightlightLayer)){
         map.removeLayer(hightlightLayer)
     }
-    L.geoJSON(roadGeoJson, 
+    baseRoads = L.geoJSON(roadGeoJson, 
         {style : default_style,
 
-    }).addTo(map);
+    });
+    baseRoads.addTo(map)
   };
 
 
@@ -74,9 +99,8 @@ $.getJSON("https://raw.githubusercontent.com/UBCGeodata/ubc-geospatial-opendata/
     function (data){
         roadGeoJson = data;
         document.getElementById("showRoad")
-        .addEventListener('click', baseRoads);
+        .addEventListener('click', layerchange);
 
         document.getElementById("roadHighlightButton")
         .addEventListener('click',highlightRoads)
     });
-
