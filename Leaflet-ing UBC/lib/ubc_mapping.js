@@ -2,22 +2,28 @@ var map = L.map('mapid', {
     center: [49.265637, -123.256113],
     zoom: 15
 });
-var topoTiles = L.tileLayer(
-    'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-    {   maxZoom: 17,
-        attribution: 
-        'Basemap data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-).addTo(map);
+var topoTiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
 
 var roadGeoJson;
 var roadsToHighlight = "";
 
-function style (feature) {
+function default_style (feature) {
     return {
         color : 'blue',
         weight: 2,
         opacity: 1,
+    }
+}
+
+function highlight_style(feature){
+    return {
+        color : "red",
+        weight : 3,
+        opacity : 1,
     }
 }
 
@@ -31,33 +37,46 @@ function roadsToFilter(feature){
     }
     
 }
-var lastLayerAdded = {};
-function addRoads() {
-    if (map.hasLayer(lastLayerAdded)){
-        map.removeLayer(lastLayerAdded);
+
+var hightlightLayer = {};
+function baseRoads() {
+
+    if (map.hasLayer(hightlightLayer)){
+        map.removeLayer(hightlightLayer)
     }
-    lastLayerAdded = L.geoJSON(roadGeoJson, 
-        {style : style,
-        filter: roadsToFilter
-    });
-    lastLayerAdded.addTo(map);
+    L.geoJSON(roadGeoJson, 
+        {style : default_style,
+
+    }).addTo(map);
   };
 
 
   function highlightRoads() {
+
+    if (map.hasLayer(hightlightLayer)){
+        map.removeLayer(hightlightLayer)
+    }
+
     roadsToHighlight = document
       .getElementById("road_types")
       .value;
-    addRoads();
-    roadsToHighlight = ""; // reset so that "Show All Trees" works.
+
+    hightlightLayer = L.geoJSON(roadGeoJson,
+        {style:highlight_style,
+        filter : roadsToFilter,
+    });
+    hightlightLayer.addTo(map)
+
+    roadsToHighlight = "";
   }
 
 $.getJSON("https://raw.githubusercontent.com/UBCGeodata/ubc-geospatial-opendata/master/ubcv/transportation/geojson/ubcv_roads_simple.geojson",
     function (data){
         roadGeoJson = data;
         document.getElementById("showRoad")
-        .addEventListener('click', addRoads);
+        .addEventListener('click', baseRoads);
 
         document.getElementById("roadHighlightButton")
         .addEventListener('click',highlightRoads)
     });
+
