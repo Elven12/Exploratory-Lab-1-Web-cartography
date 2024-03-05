@@ -1,6 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiamwxMjgiLCJhIjoiY2xiNWxjZDMyMDNseDN2bnRuZmJnZmVpMyJ9.m9nMrt48uC0SHC_YOJtAjg';
 const map = new mapboxgl.Map({
     container: 'map', 
+    style: 'mapbox://styles/mapbox/dark-v11',
     center: [-123.25, 49.262], 
     zoom: 13.5 
 });
@@ -19,6 +20,19 @@ function classify_log(st){
         return 'service'
     }
 }
+map.on('load', () => {
+    map.addSource('places', {
+        type: 'geojson',
+        data: "https://raw.githubusercontent.com/UBCGeodata/ubc-geospatial-opendata/master/ubcv/locations/geojson/ubcv_poi.geojson"
+    })
+    map.addLayer({
+        'id': 'places',
+        'type': 'symbol',
+        'source': 'places',
+        'layout' : {}
+    })
+});
+
 
 $.getJSON("https://raw.githubusercontent.com/UBCGeodata/ubc-geospatial-opendata/master/ubcv/locations/geojson/ubcv_poi.geojson", function (data) {
 

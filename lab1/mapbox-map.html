@@ -15,16 +15,55 @@
     />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <style>
+      * {
+        box-sizing: border-box;
+        border : soild #c3c3c6 5px
+      }
+      
       body {
+        color: #404040;
+        font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', sans-serif;
         margin: 0;
         padding: 0;
+        -webkit-font-smoothing: antialiased;
       }
 
-      #map {
+      h1 {
+        font-size: 22px;
+        margin: 0;
+        font-weight: 400;
+        line-height: 20px;
+        padding: 20px 2px;
+      }
+
+      a {
+        color: #404040;
+        text-decoration: none;
+      }
+
+      .sidebar {
         position: absolute;
+        width: 25%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        border-right: 1px solid rgb(200 200 200 / 25%);
+      }
+
+      .map {
+        position: absolute;
+        left: 25%;
+        width: 75%;
         top: 0;
         bottom: 0;
-        width: 100%;
+      }
+      .heading {
+        background: #fff;
+        border-bottom: 1px solid #eee;
+        height: 60px;
+        line-height: 60px;
+        padding: 0 10px;
       }
 
       .cafe {
@@ -67,10 +106,22 @@
         text-align: center;
         font-family: 'Open Sans', sans-serif;
       }
+      * {
+        box-sizing: border-box;
+      }
+  
+      
     </style>
   </head>
   <body>
-    <div id="map"></div>
+
+    <div class='sidebar'>
+      <div class='heading'>
+        <h1>Our locations</h1>
+      </div>
+      <div id='listings' class='listings'></div>
+    </div>
+    <div id="map" class="map"></div>
 
     <script src = "lib/lab1.js" type="text/javascript">
 
