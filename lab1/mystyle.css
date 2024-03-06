@@ -1,0 +1,134 @@
+* {
+    box-sizing: border-box;
+    border : soild #c3c3c6 5px;
+  }
+  
+body {
+    color: #404040;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+    font-size: 22px;
+    margin: 0;
+    font-weight: 400;
+    line-height: 20px;
+    padding: 20px 2px;
+}
+.top-align {
+    align-items: flex-start;
+}
+a {
+    color: #404040;
+    text-decoration: none;
+}
+
+.rounded-rect {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 50px -25px black;
+}
+.flex-center {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-center.left {
+    left: 0px;
+}
+
+.sidebar-content {
+    position: relative;
+    width: 95%;
+    height: 80%;
+    left: 0;
+    font-size: 32px;
+    border-right: 1px solid rgb(200 200 200 / 25%); 
+}
+
+.sidebar-toggle {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: -50px;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-toggle:hover {
+    color: #0aa1cf;
+    cursor: pointer;
+}
+
+.sidebar {
+    transition: transfrom 1s;
+    z-index : 1;
+    width: 350px;
+    height: 100%;}
+
+.map {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+}
+.heading {
+    position: absolute;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px;
+    top: 0; 
+}
+
+.cafe {
+    background-image: url('lib/cafe.png');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.service{
+    background-image: url('lib/service.png');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.restaurant{
+    background-image: url('lib/restaurant.png');
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.bank{
+    background-image: url('lib/bank.png');
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.left.collapsed {
+    transform: translateX(-295px);
+}

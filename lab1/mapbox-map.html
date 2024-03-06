@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Demo: Add custom markers in Mapbox GL JS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Open+Sans"
       rel="stylesheet"
@@ -13,151 +14,20 @@
       href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.css"
       rel="stylesheet"
     />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <style>
-      * {
-        box-sizing: border-box;
-        border : soild #c3c3c6 5px;
-      }
-      
-      body {
-        color: #404040;
-        margin: 0;
-        padding: 0;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      h1 {
-        font-size: 22px;
-        margin: 0;
-        font-weight: 400;
-        line-height: 20px;
-        padding: 20px 2px;
-      }
-
-      a {
-        color: #404040;
-        text-decoration: none;
-      }
-
-      .rounded-rect {
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 0 50px -25px black;
-    }
-    .flex-center {
-      position: absolute;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .flex-center.left {
-      left: 0px;
-    }
-
-    .sidebar-content {
-        position: absolute;
-        width: 95%;
-        height: 95%;
-        top: 0;
-        left: 0;
-        overflow: hidden;
-        border-right: 1px solid rgb(200 200 200 / 25%);
-      }
-
-      .sidebar-toggle {
-        position: absolute;
-        width: 1.3em;
-        height: 1.3em;
-        overflow: visible;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .sidebar-toggle.left{
-      right: -1.5em;
-    }
-
-    .sidebar-toggle:hover {
-        color: #0aa1cf;
-        cursor: pointer;
-    }
-
-    .sidebar {
-        transition: transfrom 1s;
-        z-index : 1;
-        width: 300px;
-        height: 100%;}
-
-    .map {
-      position: absolute;
-      width: 100%;
-      top: 0;
-      bottom: 0;
-    }
-      .heading {
-        background: #fff;
-        border-bottom: 1px solid #eee;
-        height: 60px;
-        line-height: 60px;
-        padding: 0 10px;
-      }
-  
-      .cafe {
-        background-image: url('lib/cafe.png');
-        background-size: cover;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-      .service{
-        background-image: url('lib/service.png');
-        background-size: cover;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-      .restaurant{
-        background-image: url('lib/restaurant.png');
-        background-size: cover;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-      .bank{
-        background-image: url('lib/bank.png');
-        background-size: cover;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-      .mapboxgl-popup {
-        max-width: 200px;
-      }
-
-      .mapboxgl-popup-content {
-        text-align: center;
-        font-family: 'Open Sans', sans-serif;
-      }
-
-      .left.collapsed {
-        transform: translateX(-295px);
-    }
-      
-      
-    </style>
+    <link
+      href="mystyle.css"
+      rel="stylesheet" />
   </head>
   <body>
 
     <div id="map" class="map">
       <div id = "left" class="sidebar flex-center left collapsed">
-        <div class="sidebar-content rounded-rect flex-center">
-          <h>Left sidebar </h>
-          <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
+        <div class="sidebar-content rounded-rect flex-center top-align">
+          <div class='heading'>
+            <h1>Our locations</h1>
+          </div>
+          <div id = 'listings' class = 'listings'></div>
+          <div class="sidebar-toggle rounded-rect" onclick="toggleSidebar('left')">
           &rarr;
           </div>
         </div>
