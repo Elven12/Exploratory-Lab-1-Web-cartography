@@ -1,9 +1,10 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiamwxMjgiLCJhIjoiY2xiNWxjZDMyMDNseDN2bnRuZmJnZmVpMyJ9.m9nMrt48uC0SHC_YOJtAjg';
 const map = new mapboxgl.Map({
     container: 'map', 
-    style: 'mapbox://styles/mapbox/dark-v11',
+    style: 'mapbox://styles/mapbox/light-v11',
     center: [-123.25, 49.262], 
-    zoom: 13.5 
+    zoom: 13.5,
+    pitch: 60
 });
 
 var geojson;
@@ -20,6 +21,7 @@ function classify_log(st){
         return 'service'
     }
 }
+
 map.on('load', () => {
     map.addSource('places', {
         type: 'geojson',
@@ -32,6 +34,18 @@ map.on('load', () => {
         'layout' : {}
     })
 });
+
+function toggleSidebar (id){
+    const elem = document.getElementById(id);
+    const collapsed = elem.classList.toggle('collapsed')
+
+    const padding = {}
+    padding[id] = collapsed ? 0:300;
+    map.easeTo({
+        padding: padding,
+        duration: 1000
+    });
+}
 
 
 $.getJSON("https://raw.githubusercontent.com/UBCGeodata/ubc-geospatial-opendata/master/ubcv/locations/geojson/ubcv_poi.geojson", function (data) {
@@ -55,4 +69,7 @@ $.getJSON("https://raw.githubusercontent.com/UBCGeodata/ubc-geospatial-opendata/
             )
             .addTo(map);
     }
+    map.on('load', () => {
+        toggleSidebar('left');
+    });
 });
