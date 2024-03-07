@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Demo: Add custom markers in Mapbox GL JS</title>
+    <title>POint of Interesting In UBC</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link
@@ -24,9 +24,14 @@
       <div id = "left" class="sidebar flex-center left collapsed">
         <div class="sidebar-content rounded-rect flex-center top-align">
           <div class='heading'>
-            <h1>Our locations</h1>
+            <h1>Filter available</h1>
           </div>
-          <div id = 'listings' class = 'listings'></div>
+          <div id = 'filters' class = 'fliters'>
+            <button id="cafe">Show cafe</button>
+            <button id="bank">Show bank</button>
+            <button id="restaurant" >Show restaurant</button>
+            <button id = "service"> Show community or Campus Service </button>
+          </div>
           <div class="sidebar-toggle rounded-rect" onclick="toggleSidebar('left')">
           &rarr;
           </div>

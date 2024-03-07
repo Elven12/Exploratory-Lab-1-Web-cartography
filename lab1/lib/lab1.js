@@ -17,23 +17,14 @@ function classify_log(st){
     }else if (st =='bank'){
         return 'bank'
     }
-    else {
+    else if (st == 'park'){
+        return 'park';
+    }
+    else if (st == 'campus_services'){
         return 'service'
     }
 }
 
-map.on('load', () => {
-    map.addSource('places', {
-        type: 'geojson',
-        data: "https://raw.githubusercontent.com/UBCGeodata/ubc-geospatial-opendata/master/ubcv/locations/geojson/ubcv_poi.geojson"
-    })
-    map.addLayer({
-        'id': 'places',
-        'type': 'symbol',
-        'source': 'places',
-        'layout' : {}
-    })
-});
 
 function toggleSidebar (id){
     const elem = document.getElementById(id);
@@ -47,28 +38,32 @@ function toggleSidebar (id){
     });
 }
 
+function add_map(e, feature){
+    var service_type = feature.properties.SERVICE_TYPE;
+    e.className = classify_log(service_type);
+    new mapboxgl.Marker(e)
+    .setLngLat(feature.geometry.coordinates)
+    .setPopup(
+        new mapboxgl.Popup({ offset: 25 })
+            .setHTML(
+                `<h3>${feature.properties.PLACENAME}</h3><p>${service_type}</p>`
+            )
+    ).addTo(map);
+}
 
 $.getJSON("https://raw.githubusercontent.com/UBCGeodata/ubc-geospatial-opendata/master/ubcv/locations/geojson/ubcv_poi.geojson", function (data) {
 
     geojson = data;
 
-    for (const feature of geojson.features) {
+     geojson.features.forEach(function(feature){
         const el = document.createElement('div');
+        add_map(el,feature)
 
-        var service_type = feature.properties.SERVICE_TYPE;
-  
-        el.className = classify_log(service_type);
-         
-        new mapboxgl.Marker(el)
-            .setLngLat(feature.geometry.coordinates)
-            .setPopup(
-                new mapboxgl.Popup({ offset: 25 })
-                    .setHTML(
-                        `<h3>${feature.properties.PLACENAME}</h3><p>${service_type}</p>`
-                    )
-            )
-            .addTo(map);
-    }
+        geojson.features.forEach(function (feature, i) {
+            feature.properties.id = i;
+        });
+    });
+
     map.on('load', () => {
         toggleSidebar('left');
     });
